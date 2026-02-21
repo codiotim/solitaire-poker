@@ -3,10 +3,10 @@ const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 const RANK_VALUES = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14 };
 
 const ROUND_CONFIG = [
-    { round: 1, cardsPerHand: 2 },
-    { round: 2, cardsPerHand: 3 },
-    { round: 3, cardsPerHand: 4 },
-    { round: 4, cardsPerHand: 5 }
+    { round: 1, cardsPerHand: 2, minScore: 104 },
+    { round: 2, cardsPerHand: 3, minScore: 156 },
+    { round: 3, cardsPerHand: 4, minScore: 208 },
+    { round: 4, cardsPerHand: 5, minScore: 260 }
 ];
 
 let gameState = {
@@ -171,6 +171,11 @@ function placeCard(handIndex) {
     if (gameState.hands[handIndex].length === config.cardsPerHand) {
         const handScore = evaluateHand(gameState.hands[handIndex]);
         document.getElementById(`hand-score-${handIndex}`).textContent = handScore.name;
+        
+        if (handScore.score < config.minScore) {
+            endGame(false, `Hand ${handIndex + 1} scored ${handScore.score} but needed ${config.minScore}!`);
+            return;
+        }
     }
     
     if (isRoundComplete()) {
@@ -250,7 +255,7 @@ function nextRound() {
     updateDisplay();
 }
 
-function endGame(won) {
+function endGame(won, customMessage = null) {
     const modal = document.getElementById('game-over-modal');
     const title = document.getElementById('game-over-title');
     const message = document.getElementById('game-over-message');
@@ -261,7 +266,7 @@ function endGame(won) {
         message.textContent = 'You successfully completed all 4 rounds!';
     } else {
         title.textContent = 'Game Over';
-        message.textContent = 'You ran out of cards before completing all hands.';
+        message.textContent = customMessage || 'You ran out of cards before completing all hands.';
     }
     
     finalScore.innerHTML = `<div class="final-score-display">Final Score: <strong>${gameState.score}</strong></div>`;
@@ -291,6 +296,7 @@ function updateDisplay() {
     const config = ROUND_CONFIG[gameState.currentRound];
     document.getElementById('round-display').textContent = config.round;
     document.getElementById('cards-per-hand').textContent = config.cardsPerHand;
+    document.getElementById('min-score').textContent = config.minScore;
     document.getElementById('score-display').textContent = gameState.score;
     document.getElementById('cards-left').textContent = gameState.deck.length - gameState.currentCardIndex;
 }
@@ -496,30 +502,6 @@ function checkStraight(hand) {
     }
     
     return false;
-}
-
-function placeCard(handIndex) {
-    const config = ROUND_CONFIG[gameState.currentRound];
-    
-    if (gameState.hands[handIndex].length >= config.cardsPerHand) {
-        return;
-    }
-    
-    const card = gameState.deck[gameState.currentCardIndex];
-    gameState.hands[handIndex].push(card);
-    gameState.currentCardIndex++;
-    
-    if (gameState.hands[handIndex].length === config.cardsPerHand) {
-        const handScore = evaluateHand(gameState.hands[handIndex]);
-        document.getElementById(`hand-score-${handIndex}`).textContent = handScore.name;
-    }
-    
-    if (isRoundComplete()) {
-        completeRound();
-    } else {
-        renderHands();
-        showNextCard();
-    }
 }
 
 document.getElementById('start-btn').addEventListener('click', startGame);
