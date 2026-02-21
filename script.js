@@ -511,7 +511,7 @@ function evaluateThreeCardHand(hand) {
 
 function evaluateFourCardHand(hand) {
     const rankCounts = getRankCounts(hand);
-    const counts = Object.values(rankCounts);
+    const counts = Object.values(rankCounts).sort((a, b) => b - a);
     const cardStrength = getCardStrength(hand);
     const isFlush = checkFlush(hand);
     const isStraight = checkStraight(hand);
@@ -520,11 +520,11 @@ function evaluateFourCardHand(hand) {
         return { name: 'Straight Flush', score: 5000 + cardStrength };
     }
     
-    if (counts.includes(4)) {
+    if (counts[0] === 4) {
         return { name: 'Four of a Kind', score: 2000 + cardStrength };
     }
     
-    if (counts.includes(3)) {
+    if (counts[0] === 3) {
         return { name: 'Three of a Kind', score: 600 + cardStrength };
     }
     
@@ -553,6 +553,10 @@ function evaluateFiveCardHand(hand) {
     const rankCounts = getRankCounts(hand);
     const counts = Object.values(rankCounts).sort((a, b) => b - a);
     const cardStrength = getCardStrength(hand);
+    
+    if (counts[0] === 5) {
+        return { name: 'Five of a Kind', score: 150000 + cardStrength };
+    }
     
     if (straight && isFlush) {
         const ranks = hand.filter(c => !c.isJoker).map(c => RANK_VALUES[c.rank]);
