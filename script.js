@@ -1,3 +1,10 @@
+import { firebaseConfig } from './firebase-config.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 const RANK_VALUES = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14 };
@@ -19,6 +26,8 @@ let gameState = {
     roundStartTime: null,
     timerInterval: null
 };
+
+let highScore = parseInt(localStorage.getItem('solitairePokerHighScore')) || 0;
 
 function createDeck() {
     const deck = [];
@@ -282,17 +291,100 @@ function endGame(won, customMessage = null) {
     const title = document.getElementById('game-over-title');
     const message = document.getElementById('game-over-message');
     const finalScore = document.getElementById('final-score');
+    const nameEntry = document.getElementById('name-entry');
+    
+    let isNewHighScore = false;
+    if (gameState.score > highScore) {
+        highScore = gameState.score;
+        localStorage.setItem('solitairePokerHighScore', highScore);
+        isNewHighScore = true;
+    }
     
     if (won) {
         title.textContent = 'Congratulations! You Win!';
         message.textContent = 'You successfully completed all 4 rounds!';
+        nameEntry.classList.remove('hidden');
     } else {
         title.textContent = 'Game Over';
         message.textContent = customMessage || 'You ran out of cards before completing all hands.';
+        nameEntry.classList.add('hidden');
     }
     
-    finalScore.innerHTML = `<div class="final-score-display">Final Score: <strong>${gameState.score}</strong></div>`;
+    let scoreHTML = `<div class="final-score-display">Final Score: <strong>${gameState.score}</strong>`;
+    if (isNewHighScore) {
+        scoreHTML += `<div class="new-high-score">New High Score!</div>`;
+    }
+    scoreHTML += `</div>`;
+    scoreHTML += `<div class="high-score-display">Personal Best: <strong>${highScore}</strong></div>`;
+    
+    finalScore.innerHTML = scoreHTML;
     modal.classList.remove('hidden');
+}
+
+async function submitScore() {
+    const playerName = document.getElementById('player-name').value.trim();
+    
+    if (!playerName) {
+        alert('Please enter your name!');
+        return;
+    }
+    
+    try {
+        await addDoc(collection(db, 'leaderboard'), {
+            name: playerName,
+            score: gameState.score,
+            timestamp: new Date().toISOString()
+        });
+        
+        document.getElementById('name-entry').classList.add('hidden');
+        alert('Score submitted to leaderboard!');
+        showLeaderboard();
+    } catch (error) {
+        console.error('Error submitting score:', error);
+        alert('Failed to submit score. Please try again.');
+    }
+}
+
+async function showLeaderboard() {
+    const modal = document.getElementById('leaderboard-modal');
+    const listDiv = document.getElementById('leaderboard-list');
+    
+    try {
+        const q = query(collection(db, 'leaderboard'), orderBy('score', 'desc'), limit(10));
+        const querySnapshot = await getDocs(q);
+        
+        let html = '<div class="leaderboard-entries">';
+        let rank = 1;
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            html += `
+                <div class="leaderboard-entry">
+                    <span class="rank">#${rank}</span>
+                    <span class="player-name">${escapeHtml(data.name)}</span>
+                    <span class="player-score">${data.score}</span>
+                </div>
+            `;
+            rank++;
+        });
+        
+        if (rank === 1) {
+            html += '<div class="no-scores">No scores yet. Be the first!</div>';
+        }
+        
+        html += '</div>';
+        listDiv.innerHTML = html;
+        modal.classList.remove('hidden');
+    } catch (error) {
+        console.error('Error loading leaderboard:', error);
+        listDiv.innerHTML = '<div class="error-message">Failed to load leaderboard.</div>';
+        modal.classList.remove('hidden');
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function restartGame() {
@@ -604,6 +696,11 @@ document.getElementById('start-btn').addEventListener('click', startGame);
 document.getElementById('skip-btn').addEventListener('click', skipCard);
 document.getElementById('next-round-btn').addEventListener('click', nextRound);
 document.getElementById('restart-btn').addEventListener('click', restartGame);
+document.getElementById('submit-score-btn').addEventListener('click', submitScore);
+document.getElementById('show-leaderboard-btn').addEventListener('click', showLeaderboard);
+document.getElementById('close-leaderboard-btn').addEventListener('click', () => {
+    document.getElementById('leaderboard-modal').classList.add('hidden');
+});
 
 renderHands();
 updateDisplay();

@@ -78,12 +78,26 @@
                     <h2 id="game-over-title">Game Over</h2>
                     <div id="game-over-message"></div>
                     <div id="final-score"></div>
+                    <div id="name-entry" class="hidden">
+                        <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+                        <button id="submit-score-btn" class="btn btn-primary">Submit to Leaderboard</button>
+                    </div>
                     <button id="restart-btn" class="btn btn-primary">Play Again</button>
                 </div>
             </div>
+
+            <div id="leaderboard-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>Leaderboard</h2>
+                    <div id="leaderboard-list"></div>
+                    <button id="close-leaderboard-btn" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
         </main>
+
+        <button id="show-leaderboard-btn" class="floating-btn">🏆 Leaderboard</button>
     </div>
 
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
