@@ -698,21 +698,32 @@ function checkStraight(hand) {
 
 window.placeCard = placeCard;
 
-document.getElementById('start-btn').addEventListener('click', startGame);
-document.getElementById('skip-btn').addEventListener('click', skipCard);
-document.getElementById('next-round-btn').addEventListener('click', nextRound);
-document.getElementById('restart-btn').addEventListener('click', restartGame);
-document.getElementById('submit-score-btn').addEventListener('click', submitScore);
-document.getElementById('show-leaderboard-btn').addEventListener('click', showLeaderboard);
-document.getElementById('close-leaderboard-btn').addEventListener('click', () => {
-    document.getElementById('leaderboard-modal').classList.add('hidden');
-});
-document.getElementById('show-rules-btn').addEventListener('click', () => {
-    document.getElementById('rules-modal').classList.remove('hidden');
-});
-document.getElementById('close-rules-btn').addEventListener('click', () => {
-    document.getElementById('rules-modal').classList.add('hidden');
-});
+function initializeEventListeners() {
+    document.getElementById('start-btn').addEventListener('click', startGame);
+    document.getElementById('skip-btn').addEventListener('click', skipCard);
+    document.getElementById('next-round-btn').addEventListener('click', nextRound);
+    document.getElementById('restart-btn').addEventListener('click', restartGame);
+    document.getElementById('submit-score-btn').addEventListener('click', submitScore);
+    document.getElementById('show-leaderboard-btn').addEventListener('click', showLeaderboard);
+    document.getElementById('close-leaderboard-btn').addEventListener('click', () => {
+        document.getElementById('leaderboard-modal').classList.add('hidden');
+    });
+    document.getElementById('show-rules-btn').addEventListener('click', () => {
+        document.getElementById('rules-modal').classList.remove('hidden');
+    });
+    document.getElementById('close-rules-btn').addEventListener('click', () => {
+        document.getElementById('rules-modal').classList.add('hidden');
+    });
+}
 
-renderHands();
-updateDisplay();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeEventListeners();
+        renderHands();
+        updateDisplay();
+    });
+} else {
+    initializeEventListeners();
+    renderHands();
+    updateDisplay();
+}
