@@ -2,8 +2,13 @@ import { firebaseConfig } from './firebase-config.js';
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
 import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+let app, db;
+try {
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+} catch (error) {
+    console.error('Firebase initialization error:', error);
+}
 
 const SUITS = ['♠', '♥', '♦', '♣'];
 const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -333,6 +338,11 @@ async function submitScore() {
         return;
     }
     
+    if (!db) {
+        alert('Leaderboard not configured yet. Check Firebase setup!');
+        return;
+    }
+    
     try {
         await addDoc(collection(db, 'leaderboard'), {
             name: playerName,
@@ -352,6 +362,12 @@ async function submitScore() {
 async function showLeaderboard() {
     const modal = document.getElementById('leaderboard-modal');
     const listDiv = document.getElementById('leaderboard-list');
+    
+    if (!db) {
+        listDiv.innerHTML = '<div class="error-message">Leaderboard not configured yet. Check Firebase setup!</div>';
+        modal.classList.remove('hidden');
+        return;
+    }
     
     try {
         const q = query(collection(db, 'leaderboard'), orderBy('score', 'desc'), limit(10));
@@ -380,7 +396,7 @@ async function showLeaderboard() {
         modal.classList.remove('hidden');
     } catch (error) {
         console.error('Error loading leaderboard:', error);
-        listDiv.innerHTML = '<div class="error-message">Failed to load leaderboard.</div>';
+        listDiv.innerHTML = '<div class="error-message">Failed to load leaderboard. Check console for details.</div>';
         modal.classList.remove('hidden');
     }
 }
