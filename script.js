@@ -3,10 +3,10 @@ const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 const RANK_VALUES = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14 };
 
 const ROUND_CONFIG = [
-    { round: 1, cardsPerHand: 2, minScore: 104 },
-    { round: 2, cardsPerHand: 3, minScore: 156 },
-    { round: 3, cardsPerHand: 4, minScore: 208 },
-    { round: 4, cardsPerHand: 5, minScore: 260 }
+    { round: 1, cardsPerHand: 2, minScore: 104, timeCeiling: 60 },
+    { round: 2, cardsPerHand: 3, minScore: 156, timeCeiling: 120 },
+    { round: 3, cardsPerHand: 4, minScore: 208, timeCeiling: 240 },
+    { round: 4, cardsPerHand: 5, minScore: 260, timeCeiling: 480 }
 ];
 
 let gameState = {
@@ -15,7 +15,9 @@ let gameState = {
     currentRound: 0,
     hands: [[], [], [], [], []],
     score: 0,
-    gameStarted: false
+    gameStarted: false,
+    roundStartTime: null,
+    timerInterval: null
 };
 
 function createDeck() {
@@ -49,12 +51,15 @@ function startGame() {
         currentRound: 0,
         hands: [[], [], [], [], []],
         score: 0,
-        gameStarted: true
+        gameStarted: true,
+        roundStartTime: Date.now(),
+        timerInterval: null
     };
     
     document.getElementById('start-btn').style.display = 'none';
     document.getElementById('skip-btn').disabled = false;
     
+    startTimer();
     renderHands();
     showNextCard();
     updateDisplay();
@@ -203,6 +208,12 @@ function isRoundComplete() {
 }
 
 function completeRound() {
+    stopTimer();
+    
+    const roundTime = Math.floor((Date.now() - gameState.roundStartTime) / 1000);
+    const config = ROUND_CONFIG[gameState.currentRound];
+    const timeBonus = Math.max(0, (config.timeCeiling - roundTime) * 10);
+    
     let roundScore = 0;
     const results = [];
     
@@ -212,14 +223,15 @@ function completeRound() {
         results.push({ handNum: i + 1, ...handEval });
     }
     
-    gameState.score += roundScore;
+    gameState.score += roundScore + timeBonus;
     
-    showRoundCompleteModal(results, roundScore);
+    showRoundCompleteModal(results, roundScore, timeBonus, roundTime);
 }
 
-function showRoundCompleteModal(results, roundScore) {
+function showRoundCompleteModal(results, roundScore, timeBonus, roundTime) {
     const modal = document.getElementById('round-complete-modal');
     const resultsDiv = document.getElementById('round-results');
+    const config = ROUND_CONFIG[gameState.currentRound];
     
     let html = `<div class="results-list">`;
     for (const result of results) {
@@ -232,7 +244,11 @@ function showRoundCompleteModal(results, roundScore) {
         `;
     }
     html += `</div>`;
-    html += `<div class="round-score">Round Score: <strong>+${roundScore}</strong></div>`;
+    html += `<div class="time-info">Time: ${roundTime}s (Ceiling: ${config.timeCeiling}s)</div>`;
+    if (timeBonus > 0) {
+        html += `<div class="time-bonus">Time Bonus: <strong>+${timeBonus}</strong></div>`;
+    }
+    html += `<div class="round-score">Round Score: <strong>+${roundScore + timeBonus}</strong></div>`;
     
     resultsDiv.innerHTML = html;
     modal.classList.remove('hidden');
@@ -251,13 +267,17 @@ function nextRound() {
     gameState.hands = [[], [], [], [], []];
     gameState.deck = createDeck();
     gameState.currentCardIndex = 0;
+    gameState.roundStartTime = Date.now();
     
+    startTimer();
     renderHands();
     showNextCard();
     updateDisplay();
 }
 
 function endGame(won, customMessage = null) {
+    stopTimer();
+    
     const modal = document.getElementById('game-over-modal');
     const title = document.getElementById('game-over-title');
     const message = document.getElementById('game-over-message');
@@ -276,6 +296,7 @@ function endGame(won, customMessage = null) {
 }
 
 function restartGame() {
+    stopTimer();
     document.getElementById('game-over-modal').classList.add('hidden');
     document.getElementById('start-btn').style.display = 'block';
     document.getElementById('skip-btn').disabled = true;
@@ -286,10 +307,14 @@ function restartGame() {
         currentRound: 0,
         hands: [[], [], [], [], []],
         score: 0,
-        gameStarted: false
+        gameStarted: false,
+        roundStartTime: null,
+        timerInterval: null
     };
     
     document.getElementById('current-card').innerHTML = '<div class="card-placeholder">Start Game</div>';
+    document.getElementById('timer-display').textContent = '0s';
+    document.getElementById('time-bonus-display').textContent = '+0';
     renderHands();
     updateDisplay();
 }
@@ -299,6 +324,7 @@ function updateDisplay() {
     document.getElementById('round-display').textContent = config.round;
     document.getElementById('cards-per-hand').textContent = config.cardsPerHand;
     document.getElementById('min-score').textContent = config.minScore;
+    document.getElementById('time-ceiling').textContent = `${config.timeCeiling}s`;
     document.getElementById('score-display').textContent = gameState.score;
     document.getElementById('cards-left').textContent = gameState.deck.length - gameState.currentCardIndex;
 }
@@ -461,12 +487,45 @@ function getCardStrength(hand) {
     let strength = 0;
     for (const card of hand) {
         if (card.isJoker) {
-            strength += 14;
+            strength += 0;
         } else {
             strength += RANK_VALUES[card.rank];
         }
     }
     return strength;
+}
+
+function startTimer() {
+    if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+    }
+    
+    gameState.timerInterval = setInterval(() => {
+        updateTimerDisplay();
+    }, 100);
+}
+
+function stopTimer() {
+    if (gameState.timerInterval) {
+        clearInterval(gameState.timerInterval);
+        gameState.timerInterval = null;
+    }
+}
+
+function updateTimerDisplay() {
+    const elapsed = Math.floor((Date.now() - gameState.roundStartTime) / 1000);
+    const config = ROUND_CONFIG[gameState.currentRound];
+    const timeLeft = Math.max(0, config.timeCeiling - elapsed);
+    
+    document.getElementById('timer-display').textContent = `${elapsed}s`;
+    document.getElementById('time-ceiling').textContent = `${config.timeCeiling}s`;
+    
+    if (timeLeft > 0) {
+        const bonus = timeLeft * 10;
+        document.getElementById('time-bonus-display').textContent = `+${bonus}`;
+    } else {
+        document.getElementById('time-bonus-display').textContent = '+0';
+    }
 }
 
 function getRankCounts(hand) {
