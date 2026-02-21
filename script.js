@@ -249,6 +249,8 @@ function nextRound() {
     }
     
     gameState.hands = [[], [], [], [], []];
+    gameState.deck = createDeck();
+    gameState.currentCardIndex = 0;
     
     renderHands();
     showNextCard();
@@ -322,6 +324,7 @@ function evaluateHand(hand) {
 function evaluateTwoCardHand(hand) {
     const [card1, card2] = hand;
     const cardStrength = getCardStrength(hand);
+    const isFlush = checkFlush(hand);
     
     if (card1.isJoker || card2.isJoker) {
         return { name: 'Pair', score: 100 + cardStrength };
@@ -331,6 +334,10 @@ function evaluateTwoCardHand(hand) {
         return { name: 'Pair', score: 100 + cardStrength };
     }
     
+    if (isFlush) {
+        return { name: 'Flush', score: 50 + cardStrength };
+    }
+    
     return { name: 'High Card', score: 10 + cardStrength };
 }
 
@@ -338,10 +345,25 @@ function evaluateThreeCardHand(hand) {
     const rankCounts = getRankCounts(hand);
     const counts = Object.values(rankCounts);
     const cardStrength = getCardStrength(hand);
+    const isFlush = checkFlush(hand);
+    const isStraight = checkStraight(hand);
+    
+    if (isStraight && isFlush) {
+        return { name: 'Straight Flush', score: 1000 + cardStrength };
+    }
     
     if (counts.includes(3)) {
         return { name: 'Three of a Kind', score: 500 + cardStrength };
     }
+    
+    if (isFlush) {
+        return { name: 'Flush', score: 300 + cardStrength };
+    }
+    
+    if (isStraight) {
+        return { name: 'Straight', score: 250 + cardStrength };
+    }
+    
     if (counts.includes(2)) {
         return { name: 'Pair', score: 150 + cardStrength };
     }
@@ -353,12 +375,27 @@ function evaluateFourCardHand(hand) {
     const rankCounts = getRankCounts(hand);
     const counts = Object.values(rankCounts);
     const cardStrength = getCardStrength(hand);
+    const isFlush = checkFlush(hand);
+    const isStraight = checkStraight(hand);
+    
+    if (isStraight && isFlush) {
+        return { name: 'Straight Flush', score: 5000 + cardStrength };
+    }
     
     if (counts.includes(4)) {
         return { name: 'Four of a Kind', score: 2000 + cardStrength };
     }
+    
     if (counts.includes(3)) {
         return { name: 'Three of a Kind', score: 600 + cardStrength };
+    }
+    
+    if (isFlush) {
+        return { name: 'Flush', score: 500 + cardStrength };
+    }
+    
+    if (isStraight) {
+        return { name: 'Straight', score: 450 + cardStrength };
     }
     
     const pairs = counts.filter(c => c === 2).length;
