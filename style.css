@@ -316,6 +316,12 @@ main {
     box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
 }
 
+.modal-content.large {
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
 .modal-content h2 {
     color: #667eea;
     margin-bottom: 20px;
@@ -464,10 +470,21 @@ main {
     z-index: 100;
 }
 
+.floating-btn.rules-btn {
+    bottom: 88px;
+    background: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
 .floating-btn:hover {
     background: #5568d3;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(102, 126, 234, 0.5);
+}
+
+.floating-btn.rules-btn:hover {
+    background: #059669;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5);
 }
 
 .leaderboard-entries {
@@ -506,6 +523,48 @@ main {
     text-align: center;
     padding: 40px;
     color: #666;
+}
+
+.rules-content {
+    text-align: left;
+}
+
+.rules-content section {
+    margin-bottom: 24px;
+}
+
+.rules-content h3 {
+    color: #667eea;
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+}
+
+.rules-content h4 {
+    color: #333;
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.rules-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.rules-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.rules-content ul li {
+    padding: 8px 0;
+    color: #666;
+    line-height: 1.5;
+}
+
+.rules-content ul li strong {
+    color: #333;
 }
 
 @media (max-width: 1024px) {

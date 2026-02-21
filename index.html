@@ -93,9 +93,113 @@
                     <button id="close-leaderboard-btn" class="btn btn-secondary">Close</button>
                 </div>
             </div>
+
+            <div id="rules-modal" class="modal hidden">
+                <div class="modal-content large">
+                    <h2>How to Play</h2>
+                    <div class="rules-content">
+                        <section>
+                            <h3>Game Overview</h3>
+                            <p>Build 5 poker hands per round by cycling through a 54-card deck (52 cards + 2 Jokers). Complete 4 rounds with increasing difficulty to win!</p>
+                        </section>
+
+                        <section>
+                            <h3>Rounds</h3>
+                            <ul>
+                                <li><strong>Round 1:</strong> 2 cards per hand (10 cards total) - 1 minute bonus ceiling</li>
+                                <li><strong>Round 2:</strong> 3 cards per hand (15 cards total) - 2 minute bonus ceiling</li>
+                                <li><strong>Round 3:</strong> 4 cards per hand (20 cards total) - 4 minute bonus ceiling</li>
+                                <li><strong>Round 4:</strong> 5 cards per hand (25 cards total) - 8 minute bonus ceiling</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3>Gameplay</h3>
+                            <ul>
+                                <li>Cards are shown one at a time</li>
+                                <li>Click "Place Here" to add the card to a hand</li>
+                                <li>Click "Skip Card" to pass on a card</li>
+                                <li>Each hand must meet the minimum score to continue</li>
+                                <li>Jokers are wild cards (match any rank/suit)</li>
+                                <li>Get a fresh shuffled deck each round</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3>Minimum Scores</h3>
+                            <ul>
+                                <li><strong>Round 1:</strong> 104 points (pair of 2s)</li>
+                                <li><strong>Round 2:</strong> 156 points (pair of 2s)</li>
+                                <li><strong>Round 3:</strong> 208 points (pair of 2s)</li>
+                                <li><strong>Round 4:</strong> 260 points (pair of 2s)</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3>Scoring Formula</h3>
+                            <p><strong>Hand Score = Base Points + Card Strength</strong></p>
+                            <p>Card Strength = Sum of all card values (2-10 = face value, J=11, Q=12, K=13, A=14, Joker=0)</p>
+                        </section>
+
+                        <section>
+                            <h3>Hand Rankings & Base Points</h3>
+                            
+                            <h4>5-Card Hands:</h4>
+                            <ul>
+                                <li><strong>Royal Flush:</strong> 100,000 pts</li>
+                                <li><strong>Straight Flush:</strong> 50,000 pts</li>
+                                <li><strong>Four of a Kind:</strong> 10,000 pts</li>
+                                <li><strong>Full House:</strong> 5,000 pts</li>
+                                <li><strong>Flush:</strong> 3,000 pts</li>
+                                <li><strong>Straight:</strong> 2,000 pts</li>
+                                <li><strong>Three of a Kind:</strong> 800 pts</li>
+                                <li><strong>Two Pair:</strong> 500 pts</li>
+                                <li><strong>Pair:</strong> 250 pts</li>
+                                <li><strong>High Card:</strong> 50 pts</li>
+                            </ul>
+
+                            <h4>4-Card Hands:</h4>
+                            <ul>
+                                <li><strong>Straight Flush:</strong> 5,000 pts</li>
+                                <li><strong>Four of a Kind:</strong> 2,000 pts</li>
+                                <li><strong>Three of a Kind:</strong> 600 pts</li>
+                                <li><strong>Flush:</strong> 500 pts</li>
+                                <li><strong>Straight:</strong> 450 pts</li>
+                                <li><strong>Two Pair:</strong> 400 pts</li>
+                                <li><strong>Pair:</strong> 200 pts</li>
+                                <li><strong>High Card:</strong> 30 pts</li>
+                            </ul>
+
+                            <h4>3-Card Hands:</h4>
+                            <ul>
+                                <li><strong>Straight Flush:</strong> 1,000 pts</li>
+                                <li><strong>Three of a Kind:</strong> 500 pts</li>
+                                <li><strong>Flush:</strong> 300 pts</li>
+                                <li><strong>Straight:</strong> 250 pts</li>
+                                <li><strong>Pair:</strong> 150 pts</li>
+                                <li><strong>High Card:</strong> 20 pts</li>
+                            </ul>
+
+                            <h4>2-Card Hands:</h4>
+                            <ul>
+                                <li><strong>Pair:</strong> 100 pts</li>
+                                <li><strong>Flush:</strong> 50 pts</li>
+                                <li><strong>High Card:</strong> 10 pts</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3>Time Bonus</h3>
+                            <p>Complete a round under the time ceiling to earn <strong>+10 points per second saved</strong>!</p>
+                        </section>
+                    </div>
+                    <button id="close-rules-btn" class="btn btn-primary">Got It!</button>
+                </div>
+            </div>
         </main>
 
         <button id="show-leaderboard-btn" class="floating-btn">🏆 Leaderboard</button>
+        <button id="show-rules-btn" class="floating-btn rules-btn">📖 Rules</button>
     </div>
 
     <script type="module" src="script.js"></script>

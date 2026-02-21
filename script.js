@@ -707,6 +707,12 @@ document.getElementById('show-leaderboard-btn').addEventListener('click', showLe
 document.getElementById('close-leaderboard-btn').addEventListener('click', () => {
     document.getElementById('leaderboard-modal').classList.add('hidden');
 });
+document.getElementById('show-rules-btn').addEventListener('click', () => {
+    document.getElementById('rules-modal').classList.remove('hidden');
+});
+document.getElementById('close-rules-btn').addEventListener('click', () => {
+    document.getElementById('rules-modal').classList.add('hidden');
+});
 
 renderHands();
 updateDisplay();
