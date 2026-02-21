@@ -303,10 +303,14 @@ function endGame(won, customMessage = null) {
     if (won) {
         title.textContent = 'Congratulations! You Win!';
         message.textContent = 'You successfully completed all 4 rounds!';
-        nameEntry.classList.remove('hidden');
     } else {
         title.textContent = 'Game Over';
         message.textContent = customMessage || 'You ran out of cards before completing all hands.';
+    }
+    
+    if (gameState.score > 0) {
+        nameEntry.classList.remove('hidden');
+    } else {
         nameEntry.classList.add('hidden');
     }
     
