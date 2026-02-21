@@ -1,10 +1,9 @@
-// Firebase configuration
-// Replace these values with your Firebase project credentials
 export const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDNTqXZ7-kqi-3jx_sIarnc-gKNPEwWG3o",
+    authDomain: "solitaire-poker-codio.firebaseapp.com",
+    projectId: "solitaire-poker-codio",
+    storageBucket: "solitaire-poker-codio.firebasestorage.app",
+    messagingSenderId: "607583526712",
+    appId: "1:607583526712:web:7bd8b021ac8afe047c6bcd",
+    measurementId: "G-ZCEJ4GTPJ4"
 };
