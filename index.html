@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solitaire Poker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>Solitaire Poker</h1>
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="label">Round:</span>
+                    <span id="round-display" class="value">1</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Cards per Hand:</span>
+                    <span id="cards-per-hand" class="value">2</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Score:</span>
+                    <span id="score-display" class="value">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Cards Left:</span>
+                    <span id="cards-left" class="value">54</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="current-card-section">
+                <h2>Current Card</h2>
+                <div id="current-card" class="card-display">
+                    <div class="card-placeholder">Start Game</div>
+                </div>
+                <div class="controls">
+                    <button id="start-btn" class="btn btn-primary">Start Game</button>
+                    <button id="skip-btn" class="btn btn-secondary" disabled>Skip Card</button>
+                </div>
+            </div>
+
+            <div class="hands-section">
+                <h2>Your Hands</h2>
+                <div id="hands-container" class="hands-grid">
+                    <!-- Hand slots will be generated here -->
+                </div>
+            </div>
+
+            <div id="round-complete-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>Round Complete!</h2>
+                    <div id="round-results"></div>
+                    <button id="next-round-btn" class="btn btn-primary">Next Round</button>
+                </div>
+            </div>
+
+            <div id="game-over-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2 id="game-over-title">Game Over</h2>
+                    <div id="game-over-message"></div>
+                    <div id="final-score"></div>
+                    <button id="restart-btn" class="btn btn-primary">Play Again</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
