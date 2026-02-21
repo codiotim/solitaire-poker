@@ -696,6 +696,8 @@ function checkStraight(hand) {
     return false;
 }
 
+window.placeCard = placeCard;
+
 document.getElementById('start-btn').addEventListener('click', startGame);
 document.getElementById('skip-btn').addEventListener('click', skipCard);
 document.getElementById('next-round-btn').addEventListener('click', nextRound);
