@@ -577,26 +577,137 @@ main {
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+    
     h1 {
         font-size: 1.75rem;
+        margin-bottom: 12px;
+    }
+    
+    header {
+        padding: 16px;
+        margin-bottom: 16px;
     }
     
     .game-info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
     }
     
     .info-item {
-        padding: 8px 16px;
+        padding: 8px 12px;
+    }
+    
+    .info-item .label {
+        font-size: 0.75rem;
+    }
+    
+    .info-item .value {
+        font-size: 1.125rem;
+    }
+    
+    main {
+        gap: 16px;
+    }
+    
+    .current-card-section {
+        padding: 20px;
+    }
+    
+    .current-card-section h2 {
+        font-size: 1.25rem;
+        margin-bottom: 16px;
     }
     
     .card {
-        width: 120px;
-        height: 170px;
+        width: 160px;
+        height: 220px;
     }
     
     .card-placeholder {
-        width: 120px;
-        height: 170px;
+        width: 160px;
+        height: 220px;
+        font-size: 1rem;
+    }
+    
+    .controls {
+        flex-direction: row;
+        gap: 8px;
+    }
+    
+    .btn {
+        flex: 1;
+        padding: 16px 20px;
+        font-size: 1.125rem;
+    }
+    
+    .hands-section {
+        padding: 16px;
+    }
+    
+    .hands-section h2 {
+        font-size: 1.25rem;
+        margin-bottom: 16px;
+    }
+    
+    .hand {
+        padding: 12px;
+    }
+    
+    .hand-cards {
+        justify-content: center;
+    }
+    
+    .card.small {
+        width: 60px;
+        height: 85px;
+    }
+    
+    .card-slot.empty {
+        width: 60px;
+        height: 85px;
+    }
+    
+    .place-btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+    
+    .floating-btn {
+        padding: 12px 20px;
+        font-size: 0.875rem;
+        bottom: 16px;
+        right: 16px;
+    }
+    
+    .floating-btn.rules-btn {
+        bottom: 72px;
+    }
+    
+    .modal-content {
+        padding: 24px;
+        width: 95%;
+    }
+    
+    .modal-content.large {
+        max-height: 85vh;
+        padding: 20px;
+    }
+    
+    .rules-content h3 {
+        font-size: 1.125rem;
+    }
+    
+    .rules-content h4 {
+        font-size: 0.9375rem;
+    }
+    
+    .rules-content p,
+    .rules-content ul li {
+        font-size: 0.875rem;
     }
 }
