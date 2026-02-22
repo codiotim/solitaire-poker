@@ -8,60 +8,52 @@
 </head>
 <body>
     <div class="game-container">
-        <header>
-            <h1>Solitaire Poker</h1>
-            <div class="game-info">
-                <div class="info-item">
-                    <span class="label">Round:</span>
-                    <span id="round-display" class="value">1</span>
+        <header class="compact-header">
+            <div class="header-row">
+                <div class="header-item">
+                    <span class="header-label">R<span class="desktop-only">ound</span>:</span>
+                    <span id="round-display" class="header-value">1</span>
                 </div>
-                <div class="info-item">
-                    <span class="label">Cards per Hand:</span>
-                    <span id="cards-per-hand" class="value">2</span>
+                <div class="header-item">
+                    <span class="header-label"><span class="desktop-only">Cards: </span><span id="cards-per-hand" class="header-value">2</span> | Min: <span id="min-score" class="header-value">104</span></span>
                 </div>
-                <div class="info-item">
-                    <span class="label">Min Score:</span>
-                    <span id="min-score" class="value">104</span>
+                <div class="header-item">
+                    <span class="header-label">⏱️</span>
+                    <span id="timer-display" class="header-value">0s</span>
+                    <span class="header-label desktop-only">/ <span id="time-ceiling" class="header-value-small">60s</span></span>
                 </div>
-                <div class="info-item">
-                    <span class="label">Time:</span>
-                    <span id="timer-display" class="value">0s</span>
+                <div class="header-item bonus-item">
+                    <span class="header-label">Bonus:</span>
+                    <span id="time-bonus-display" class="header-value bonus">+0</span>
                 </div>
-                <div class="info-item">
-                    <span class="label">Time Ceiling:</span>
-                    <span id="time-ceiling" class="value">60s</span>
+                <div class="header-item">
+                    <span class="header-label">Score:</span>
+                    <span id="score-display" class="header-value">0</span>
                 </div>
-                <div class="info-item">
-                    <span class="label">Time Bonus:</span>
-                    <span id="time-bonus-display" class="value bonus">+0</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">Score:</span>
-                    <span id="score-display" class="value">0</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">Cards Left:</span>
-                    <span id="cards-left" class="value">54</span>
+                <div class="header-item desktop-only">
+                    <span class="header-label">Cards:</span>
+                    <span id="cards-left" class="header-value">54</span>
                 </div>
             </div>
         </header>
 
         <main>
-            <div class="current-card-section">
-                <h2>Current Card</h2>
-                <div id="current-card" class="card-display">
-                    <div class="card-placeholder">Start Game</div>
+            <div class="game-area">
+                <div class="current-card-section">
+                    <div id="current-card" class="card-display">
+                        <div class="card-placeholder">Start Game</div>
+                    </div>
                 </div>
-                <div class="controls">
-                    <button id="start-btn" class="btn btn-primary">Start Game</button>
-                    <button id="skip-btn" class="btn btn-secondary" disabled>Skip Card</button>
-                </div>
-            </div>
 
-            <div class="hands-section">
-                <h2>Your Hands</h2>
-                <div id="hands-container" class="hands-grid">
-                    <!-- Hand slots will be generated here -->
+                <div class="controls-section">
+                    <button id="start-btn" class="btn btn-primary btn-large">Start Game</button>
+                    <button id="skip-btn" class="btn btn-secondary btn-large" disabled>Skip Card</button>
+                </div>
+
+                <div class="hands-section">
+                    <div id="hands-container" class="hands-grid">
+                        <!-- Hand slots will be generated here -->
+                    </div>
                 </div>
             </div>
 

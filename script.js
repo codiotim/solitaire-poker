@@ -123,7 +123,13 @@ function renderHands() {
     
     for (let i = 0; i < 5; i++) {
         const handDiv = document.createElement('div');
-        handDiv.className = 'hand';
+        const isComplete = gameState.hands[i].length >= config.cardsPerHand;
+        handDiv.className = `hand ${isComplete ? 'hand-complete' : ''}`;
+        
+        if (!isComplete) {
+            handDiv.onclick = () => placeCard(i);
+        }
+        
         handDiv.innerHTML = `
             <div class="hand-header">
                 <span class="hand-title">Hand ${i + 1}</span>
@@ -134,7 +140,7 @@ function renderHands() {
             </div>
             <button class="btn btn-small place-btn" id="place-btn-${i}" 
                     onclick="placeCard(${i})" 
-                    ${gameState.hands[i].length >= config.cardsPerHand ? 'disabled' : ''}>
+                    ${isComplete ? 'disabled' : ''}>
                 Place Here
             </button>
         `;

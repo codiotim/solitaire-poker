@@ -25,6 +25,51 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.compact-header {
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.header-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.875rem;
+}
+
+.header-label {
+    color: #666;
+    font-size: 0.75rem;
+}
+
+.header-value {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 0.875rem;
+}
+
+.header-value-small {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 0.75rem;
+}
+
+.header-value.bonus {
+    color: #10b981;
+}
+
+.desktop-only {
+    display: inline;
+}
+
 h1 {
     font-size: 2.5rem;
     color: #667eea;
@@ -70,6 +115,13 @@ main {
     gap: 24px;
 }
 
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+}
+
 .current-card-section {
     background: white;
     border-radius: 12px;
@@ -86,6 +138,12 @@ main {
 .current-card-section h2 {
     margin-bottom: 20px;
     color: #333;
+}
+
+.controls-section {
+    display: flex;
+    gap: 12px;
+    padding: 0 16px;
 }
 
 .card-display {
@@ -223,11 +281,19 @@ main {
     font-size: 0.875rem;
 }
 
+.btn-large {
+    padding: 16px 32px;
+    font-size: 1.125rem;
+    flex: 1;
+}
+
 .hands-section {
     background: white;
     border-radius: 12px;
-    padding: 24px;
+    padding: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    overflow-y: auto;
 }
 
 .hands-section h2 {
@@ -237,7 +303,7 @@ main {
 
 .hands-grid {
     display: grid;
-    gap: 20px;
+    gap: 12px;
 }
 
 .hand {
@@ -245,6 +311,19 @@ main {
     border-radius: 8px;
     padding: 16px;
     border: 2px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.hand:hover:not(.hand-complete) {
+    border-color: #667eea;
+    background: #eef2ff;
+    transform: scale(1.02);
+}
+
+.hand.hand-complete {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .hand-header {
@@ -270,6 +349,7 @@ main {
     gap: 8px;
     margin-bottom: 12px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card-slot {
@@ -288,6 +368,7 @@ main {
 
 .place-btn {
     width: 100%;
+    display: none;
 }
 
 .modal {
@@ -579,135 +660,175 @@ main {
 
 @media (max-width: 768px) {
     body {
-        padding: 12px;
+        padding: 8px;
+        height: 100vh;
+        overflow: hidden;
     }
     
-    h1 {
-        font-size: 1.75rem;
-        margin-bottom: 12px;
+    .game-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     
-    header {
-        padding: 16px;
-        margin-bottom: 16px;
+    .desktop-only {
+        display: none;
     }
     
-    .game-info {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-    
-    .info-item {
+    .compact-header {
         padding: 8px 12px;
+        margin-bottom: 8px;
+        border-radius: 8px;
     }
     
-    .info-item .label {
+    .header-row {
+        gap: 6px;
         font-size: 0.75rem;
     }
     
-    .info-item .value {
-        font-size: 1.125rem;
+    .header-item {
+        gap: 2px;
+    }
+    
+    .header-label {
+        font-size: 0.625rem;
+    }
+    
+    .header-value {
+        font-size: 0.75rem;
     }
     
     main {
-        gap: 16px;
+        grid-template-columns: 1fr;
+        gap: 0;
+        flex: 1;
+        overflow: hidden;
+    }
+    
+    .game-area {
+        height: 100%;
+        gap: 12px;
     }
     
     .current-card-section {
-        padding: 20px;
+        position: static;
+        padding: 16px;
+        border-radius: 12px;
+        flex-shrink: 0;
     }
     
     .current-card-section h2 {
-        font-size: 1.25rem;
-        margin-bottom: 16px;
+        display: none;
     }
     
     .card {
-        width: 160px;
-        height: 220px;
+        width: 140px;
+        height: 200px;
     }
     
     .card-placeholder {
-        width: 160px;
-        height: 220px;
+        width: 140px;
+        height: 200px;
+        font-size: 0.875rem;
+    }
+    
+    .controls-section {
+        padding: 0 12px;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+    
+    .btn-large {
+        padding: 14px 24px;
         font-size: 1rem;
     }
     
-    .controls {
-        flex-direction: row;
-        gap: 8px;
-    }
-    
-    .btn {
-        flex: 1;
-        padding: 16px 20px;
-        font-size: 1.125rem;
-    }
-    
     .hands-section {
-        padding: 16px;
+        padding: 12px;
+        border-radius: 12px;
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .hands-section h2 {
-        font-size: 1.25rem;
-        margin-bottom: 16px;
+        display: none;
+    }
+    
+    .hands-grid {
+        gap: 10px;
     }
     
     .hand {
         padding: 12px;
+        border: 3px solid #e5e7eb;
+    }
+    
+    .hand:active:not(.hand-complete) {
+        background: #dbeafe;
+        border-color: #3b82f6;
     }
     
     .hand-cards {
         justify-content: center;
+        margin-bottom: 0;
     }
     
     .card.small {
-        width: 60px;
-        height: 85px;
+        width: 50px;
+        height: 72px;
     }
     
-    .card-slot.empty {
-        width: 60px;
-        height: 85px;
+    .card.small .card-rank {
+        font-size: 0.875rem;
     }
     
-    .place-btn {
-        padding: 12px;
+    .card.small .card-suit {
         font-size: 1rem;
     }
     
+    .card-slot.empty {
+        width: 50px;
+        height: 72px;
+    }
+    
     .floating-btn {
-        padding: 12px 20px;
-        font-size: 0.875rem;
-        bottom: 16px;
-        right: 16px;
+        padding: 10px 16px;
+        font-size: 0.75rem;
+        bottom: 12px;
+        right: 12px;
     }
     
     .floating-btn.rules-btn {
-        bottom: 72px;
+        bottom: 60px;
     }
     
     .modal-content {
-        padding: 24px;
+        padding: 20px;
         width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
     }
     
     .modal-content.large {
-        max-height: 85vh;
-        padding: 20px;
+        max-height: 90vh;
+        padding: 16px;
     }
     
     .rules-content h3 {
-        font-size: 1.125rem;
+        font-size: 1rem;
     }
     
     .rules-content h4 {
-        font-size: 0.9375rem;
+        font-size: 0.875rem;
     }
     
     .rules-content p,
     .rules-content ul li {
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
+    }
+    
+    .rules-content section {
+        margin-bottom: 16px;
     }
 }
