@@ -738,17 +738,26 @@ window.placeCard = placeCard;
 function initializeEventListeners() {
     document.getElementById('start-btn').addEventListener('click', startGame);
     document.getElementById('skip-btn').addEventListener('click', skipCard);
-    document.getElementById('current-card').addEventListener('click', () => {
+    
+    const currentCard = document.getElementById('current-card');
+    currentCard.addEventListener('click', () => {
         if (!gameState.gameStarted) {
             startGame();
-        }
-    });
-    document.getElementById('skip-area').addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (gameState.gameStarted) {
+        } else {
             skipCard();
         }
     });
+    
+    const skipArea = document.getElementById('skip-area');
+    if (skipArea) {
+        skipArea.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (gameState.gameStarted) {
+                skipCard();
+            }
+        });
+    }
+    
     document.getElementById('next-round-btn').addEventListener('click', nextRound);
     document.getElementById('restart-btn').addEventListener('click', restartGame);
     document.getElementById('submit-score-btn').addEventListener('click', submitScore);

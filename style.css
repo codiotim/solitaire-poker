@@ -804,14 +804,16 @@ main {
     }
     
     .skip-zone {
-        min-width: 60px;
-        padding: 12px;
+        display: none !important;
     }
     
-    .skip-text {
-        font-size: 0.875rem;
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
+    .card-display {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .current-card-section {
+        -webkit-tap-highlight-color: transparent;
     }
     
     .hands-section {
