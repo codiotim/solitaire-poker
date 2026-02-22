@@ -854,7 +854,8 @@ main {
         min-height: 100px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
     }
     
     .hand:active:not(.hand-complete) {
@@ -863,15 +864,7 @@ main {
     }
     
     .hand-header {
-        margin-bottom: 6px;
-    }
-    
-    .hand-title {
-        font-size: 0.8125rem;
-    }
-    
-    .hand-score {
-        font-size: 0.6875rem;
+        display: none;
     }
     
     .hand-cards {
@@ -881,25 +874,28 @@ main {
     }
     
     .card.small {
-        width: 36px;
-        height: 52px;
+        width: 50px;
+        height: 85px;
+        padding: 4px;
     }
     
     .card.small .card-rank {
-        font-size: 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1;
     }
     
     .card.small .card-suit {
-        font-size: 0.625rem;
+        font-size: 1rem;
+        line-height: 1;
     }
     
     .card.small .card-content {
-        gap: 2px;
+        gap: 4px;
     }
     
     .card-slot.empty {
-        width: 36px;
-        height: 52px;
+        width: 50px;
+        height: 85px;
     }
     
     .floating-btn {
