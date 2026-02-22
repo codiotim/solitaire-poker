@@ -720,7 +720,7 @@ function checkStraight(hand) {
 window.placeCard = placeCard;
 
 function initializeEventListeners() {
-    document.getElementById('start-btn').addEventListener('click', startGame);
+    document.getElementById('start-btn').addEventListener('click', () => startGame());
     document.getElementById('skip-btn').addEventListener('click', skipCard);
     
     const currentCard = document.getElementById('current-card');
