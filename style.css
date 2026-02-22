@@ -631,13 +631,28 @@ main {
 }
 
 .card-text {
-    font-size: 1.125rem;
     font-weight: bold;
     padding: 4px 6px;
     border-radius: 4px;
     background: white;
     border: 1px solid #e5e7eb;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    min-width: 28px;
+}
+
+.card-text.joker-text {
+    font-size: 1.25rem;
+}
+
+.card-rank-text {
+    font-size: 0.875rem;
+}
+
+.card-suit-text {
+    font-size: 1rem;
 }
 
 .card-text.red {
@@ -653,6 +668,8 @@ main {
     color: #d1d5db;
     padding: 4px 6px;
     display: inline-block;
+    min-width: 28px;
+    text-align: center;
 }
 
 .rules-content {
