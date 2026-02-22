@@ -241,23 +241,6 @@ main {
     font-size: 3rem;
 }
 
-.card.small {
-    width: 70px;
-    height: 100px;
-    font-size: 0.75rem;
-}
-
-.card.small .card-rank {
-    font-size: 1rem;
-}
-
-.card.small .card-suit {
-    font-size: 1.25rem;
-}
-
-.card.small .card-suit-large {
-    display: none;
-}
 
 .card-placeholder {
     width: 140px;
@@ -386,10 +369,11 @@ main {
 
 .hand-cards {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 12px;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 .card-slot {
@@ -646,6 +630,31 @@ main {
     color: #666;
 }
 
+.card-text {
+    font-size: 1.125rem;
+    font-weight: bold;
+    padding: 4px 6px;
+    border-radius: 4px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    display: inline-block;
+}
+
+.card-text.red {
+    color: #dc2626;
+}
+
+.card-text.black {
+    color: #1f2937;
+}
+
+.card-slot-text {
+    font-size: 1.125rem;
+    color: #d1d5db;
+    padding: 4px 6px;
+    display: inline-block;
+}
+
 .rules-content {
     text-align: left;
 }
@@ -876,30 +885,6 @@ main {
         flex-wrap: nowrap;
     }
     
-    .card.small {
-        width: 42px;
-        height: 70px;
-        padding: 3px;
-    }
-    
-    .card.small .card-rank {
-        font-size: 0.75rem;
-        line-height: 1;
-    }
-    
-    .card.small .card-suit {
-        font-size: 0.875rem;
-        line-height: 1;
-    }
-    
-    .card.small .card-content {
-        gap: 3px;
-    }
-    
-    .card-slot.empty {
-        width: 42px;
-        height: 70px;
-    }
     
     .floating-btn {
         padding: 8px 12px;

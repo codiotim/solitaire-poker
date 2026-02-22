@@ -161,26 +161,10 @@ function renderHandSlots(handIndex, maxCards) {
         if (i < hand.length) {
             const card = hand[i];
             const isRed = card.suit === '♥' || card.suit === '♦';
-            if (card.isJoker) {
-                html += `
-                    <div class="card small joker">
-                        <div class="card-content">
-                            <div class="card-rank">${card.suit}</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                html += `
-                    <div class="card small ${isRed ? 'red' : 'black'}">
-                        <div class="card-content">
-                            <div class="card-rank">${card.rank}</div>
-                            <div class="card-suit">${card.suit}</div>
-                        </div>
-                    </div>
-                `;
-            }
+            const displayText = card.isJoker ? '🃏' : `${card.rank}${card.suit}`;
+            html += `<span class="card-text ${isRed ? 'red' : 'black'}">${displayText}</span>`;
         } else {
-            html += '<div class="card-slot empty"></div>';
+            html += '<span class="card-slot-text">□</span>';
         }
     }
     
