@@ -58,11 +58,11 @@ function shuffleDeck(deck) {
     return shuffled;
 }
 
-function startGame() {
+function startGame(startRound = 0) {
     gameState = {
         deck: createDeck(),
         currentCardIndex: 0,
-        currentRound: 0,
+        currentRound: startRound,
         hands: [[], [], [], [], []],
         score: 0,
         gameStarted: true,
@@ -757,14 +757,28 @@ function initializeEventListeners() {
     });
 }
 
+function checkQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const roundParam = urlParams.get('round');
+    
+    if (roundParam) {
+        const round = parseInt(roundParam);
+        if (round >= 1 && round <= 4) {
+            startGame(round - 1);
+        }
+    }
+}
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initializeEventListeners();
         renderHands();
         updateDisplay();
+        checkQueryParams();
     });
 } else {
     initializeEventListeners();
     renderHands();
     updateDisplay();
+    checkQueryParams();
 }
