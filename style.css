@@ -872,32 +872,33 @@ main {
     .hand-cards {
         justify-content: center;
         margin-bottom: 0;
-        gap: 4px;
+        gap: 3px;
+        flex-wrap: nowrap;
     }
     
     .card.small {
-        width: 50px;
-        height: 85px;
-        padding: 4px;
+        width: 42px;
+        height: 70px;
+        padding: 3px;
     }
     
     .card.small .card-rank {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         line-height: 1;
     }
     
     .card.small .card-suit {
-        font-size: 1rem;
+        font-size: 0.875rem;
         line-height: 1;
     }
     
     .card.small .card-content {
-        gap: 4px;
+        gap: 3px;
     }
     
     .card-slot.empty {
-        width: 50px;
-        height: 85px;
+        width: 42px;
+        height: 70px;
     }
     
     .floating-btn {
