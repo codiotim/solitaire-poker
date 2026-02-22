@@ -886,11 +886,15 @@ main {
     }
     
     .card.small .card-rank {
-        font-size: 0.625rem;
+        font-size: 0.5rem;
     }
     
     .card.small .card-suit {
-        font-size: 0.75rem;
+        font-size: 0.625rem;
+    }
+    
+    .card.small .card-content {
+        gap: 2px;
     }
     
     .card-slot.empty {
