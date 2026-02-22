@@ -660,7 +660,7 @@ main {
 
 @media (max-width: 768px) {
     body {
-        padding: 8px;
+        padding: 4px;
         height: 100vh;
         overflow: hidden;
     }
@@ -676,14 +676,14 @@ main {
     }
     
     .compact-header {
-        padding: 8px 12px;
-        margin-bottom: 8px;
+        padding: 6px 8px;
+        margin-bottom: 4px;
         border-radius: 8px;
     }
     
     .header-row {
-        gap: 6px;
-        font-size: 0.75rem;
+        gap: 4px;
+        font-size: 0.625rem;
     }
     
     .header-item {
@@ -691,11 +691,11 @@ main {
     }
     
     .header-label {
-        font-size: 0.625rem;
+        font-size: 0.5625rem;
     }
     
     .header-value {
-        font-size: 0.75rem;
+        font-size: 0.6875rem;
     }
     
     main {
@@ -707,13 +707,15 @@ main {
     
     .game-area {
         height: 100%;
-        gap: 12px;
+        gap: 8px;
+        display: flex;
+        flex-direction: column;
     }
     
     .current-card-section {
         position: static;
-        padding: 16px;
-        border-radius: 12px;
+        padding: 12px;
+        border-radius: 8px;
         flex-shrink: 0;
     }
     
@@ -722,33 +724,46 @@ main {
     }
     
     .card {
-        width: 140px;
-        height: 200px;
+        width: 100px;
+        height: 140px;
     }
     
     .card-placeholder {
-        width: 140px;
-        height: 200px;
-        font-size: 0.875rem;
+        width: 100px;
+        height: 140px;
+        font-size: 0.75rem;
+    }
+    
+    .card-rank {
+        font-size: 1.125rem !important;
+    }
+    
+    .card-suit {
+        font-size: 1rem !important;
+    }
+    
+    .card-suit-large {
+        font-size: 2rem !important;
     }
     
     .controls-section {
-        padding: 0 12px;
-        gap: 8px;
+        padding: 0 8px;
+        gap: 6px;
         flex-shrink: 0;
     }
     
     .btn-large {
-        padding: 14px 24px;
-        font-size: 1rem;
+        padding: 12px 16px;
+        font-size: 0.9375rem;
     }
     
     .hands-section {
-        padding: 12px;
-        border-radius: 12px;
+        padding: 8px;
+        border-radius: 8px;
         flex: 1;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        min-height: 0;
     }
     
     .hands-section h2 {
@@ -756,12 +771,19 @@ main {
     }
     
     .hands-grid {
-        gap: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+    
+    .hand:nth-child(5) {
+        grid-column: 1 / -1;
     }
     
     .hand {
-        padding: 12px;
-        border: 3px solid #e5e7eb;
+        padding: 8px;
+        border: 2px solid #e5e7eb;
+        min-height: 90px;
     }
     
     .hand:active:not(.hand-complete) {
@@ -769,38 +791,51 @@ main {
         border-color: #3b82f6;
     }
     
+    .hand-header {
+        margin-bottom: 6px;
+    }
+    
+    .hand-title {
+        font-size: 0.8125rem;
+    }
+    
+    .hand-score {
+        font-size: 0.6875rem;
+    }
+    
     .hand-cards {
         justify-content: center;
         margin-bottom: 0;
+        gap: 4px;
     }
     
     .card.small {
-        width: 50px;
-        height: 72px;
+        width: 36px;
+        height: 52px;
     }
     
     .card.small .card-rank {
-        font-size: 0.875rem;
+        font-size: 0.625rem;
     }
     
     .card.small .card-suit {
-        font-size: 1rem;
+        font-size: 0.75rem;
     }
     
     .card-slot.empty {
-        width: 50px;
-        height: 72px;
+        width: 36px;
+        height: 52px;
     }
     
     .floating-btn {
-        padding: 10px 16px;
-        font-size: 0.75rem;
-        bottom: 12px;
-        right: 12px;
+        padding: 8px 12px;
+        font-size: 0.6875rem;
+        bottom: 8px;
+        right: 8px;
     }
     
     .floating-btn.rules-btn {
-        bottom: 60px;
+        bottom: 48px;
     }
     
     .modal-content {
