@@ -70,8 +70,13 @@ function startGame() {
         timerInterval: null
     };
     
-    document.getElementById('start-btn').style.display = 'none';
-    document.getElementById('skip-btn').disabled = false;
+    const startBtn = document.getElementById('start-btn');
+    const skipBtn = document.getElementById('skip-btn');
+    const skipArea = document.getElementById('skip-area');
+    
+    if (startBtn) startBtn.style.display = 'none';
+    if (skipBtn) skipBtn.disabled = false;
+    if (skipArea) skipArea.classList.add('active');
     
     startTimer();
     renderHands();
@@ -416,8 +421,14 @@ function escapeHtml(text) {
 function restartGame() {
     stopTimer();
     document.getElementById('game-over-modal').classList.add('hidden');
-    document.getElementById('start-btn').style.display = 'block';
-    document.getElementById('skip-btn').disabled = true;
+    
+    const startBtn = document.getElementById('start-btn');
+    const skipBtn = document.getElementById('skip-btn');
+    const skipArea = document.getElementById('skip-area');
+    
+    if (startBtn) startBtn.style.display = 'block';
+    if (skipBtn) skipBtn.disabled = true;
+    if (skipArea) skipArea.classList.remove('active');
     
     gameState = {
         deck: [],
@@ -430,7 +441,7 @@ function restartGame() {
         timerInterval: null
     };
     
-    document.getElementById('current-card').innerHTML = '<div class="card-placeholder">Start Game</div>';
+    document.getElementById('current-card').innerHTML = '<div class="card-placeholder">Tap to Start</div>';
     document.getElementById('timer-display').textContent = '0s';
     document.getElementById('time-bonus-display').textContent = '+0';
     renderHands();
@@ -727,6 +738,17 @@ window.placeCard = placeCard;
 function initializeEventListeners() {
     document.getElementById('start-btn').addEventListener('click', startGame);
     document.getElementById('skip-btn').addEventListener('click', skipCard);
+    document.getElementById('current-card').addEventListener('click', () => {
+        if (!gameState.gameStarted) {
+            startGame();
+        }
+    });
+    document.getElementById('skip-area').addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (gameState.gameStarted) {
+            skipCard();
+        }
+    });
     document.getElementById('next-round-btn').addEventListener('click', nextRound);
     document.getElementById('restart-btn').addEventListener('click', restartGame);
     document.getElementById('submit-score-btn').addEventListener('click', submitScore);
